@@ -6,9 +6,9 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/database.js')[env];
+const config = require(__dirname + '/config/database.js');
 const db = {};
-
+console.log("CONFIG >> ", config)
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -17,7 +17,7 @@ if (config.use_env_variable) {
 }
 
 fs
-  .readdirSync(__dirname)
+  .readdirSync(__dirname +'/models')
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
@@ -27,7 +27,9 @@ fs
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    console.log("FILE > ", file)
+    console.log("FILE > ", path.join(__dirname, `/models/${file}`))
+    const model = require(path.join(__dirname, `/models/${file}`))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 

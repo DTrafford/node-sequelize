@@ -1,5 +1,6 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Plans', {
@@ -22,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       features: {
-        type: Sequelize.ARRAY
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       monthlyFee: {
         type: Sequelize.FLOAT
